@@ -1,5 +1,9 @@
-# Compiled class file
-*.class
+# Text editor
+/.idea
+/.vscode
+
+# Output
+/target
 
 # Log file
 *.log
