@@ -7,6 +7,10 @@ RTMP (Real-Time Messaging Protocol) server emulator for Toonix World _(mostly kn
 - **Java -** Version 15
 - Red5 Server instance
 
+## Features
+
+You can check the current state of features [here](https://github.com/OpenToonix/OpenToonix-RTMP-Server/wiki/Features).
+
 ## Support
 
 For further support, you can join us on [Discord](https://discord.gg/8ZWkyXnv4h).
