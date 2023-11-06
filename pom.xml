@@ -37,6 +37,7 @@
             <artifactId>red5-server</artifactId>
             <version>${red5.version}</version>
             <type>jar</type>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
