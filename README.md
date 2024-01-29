@@ -5,7 +5,7 @@ RTMP (Real-Time Messaging Protocol) server emulator for Toonix World _(mostly kn
 ## Requirements
 
 - **Java -** Version 15
-- Red5 Server instance
+- [Red5 Server](https://github.com/Red5/red5-server) instance
 
 ## Features
 
