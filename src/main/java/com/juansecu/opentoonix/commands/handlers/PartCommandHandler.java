@@ -1,9 +1,11 @@
 package com.juansecu.opentoonix.commands.handlers;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.Red5;
+import org.red5.server.api.service.IServiceCapableConnection;
 import org.slf4j.Logger;
 
 import com.juansecu.opentoonix.commands.models.InvocableCommand;
@@ -19,7 +21,10 @@ public class PartCommandHandler implements ICommandHandler {
     private static final Logger CONSOLE_LOGGER = Red5LoggerFactory.getLogger(PartCommandHandler.class);
 
     @Override
-    public Object handle(final Object[] params) {
+    public Object handle(
+        final Object[] params,
+        final Map<IServiceCapableConnection, Object[]> connectedPlayers
+    ) {
         PartCommandHandler.CONSOLE_LOGGER.info(
             "Command {} - Params {}",
             PartCommandHandler.COMMAND_NAME,

@@ -47,7 +47,10 @@ public class OpenToonixRtmpServerApplication extends MultiThreadedApplicationAda
             params
         );
 
-        return this.commandHandlerController.handle(params);
+        return this.commandHandlerController.handle(
+            params,
+            OpenToonixRtmpServerApplication.CONNECTED_PLAYERS
+        );
     }
 
     @Override

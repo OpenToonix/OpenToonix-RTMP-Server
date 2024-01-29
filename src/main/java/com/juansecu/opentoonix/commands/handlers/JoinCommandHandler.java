@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.Red5;
+import org.red5.server.api.service.IServiceCapableConnection;
 import org.slf4j.Logger;
 
 import com.juansecu.opentoonix.commands.models.InvocableCommand;
@@ -15,7 +16,10 @@ public class JoinCommandHandler implements ICommandHandler {
     private static final Logger CONSOLE_LOGGER = Red5LoggerFactory.getLogger(JoinCommandHandler.class);
 
     @Override
-    public Object handle(final Object[] params) {
+    public Object handle(
+        final Object[] params,
+        final Map<IServiceCapableConnection, Object[]> connectedPlayers
+    ) {
         JoinCommandHandler.CONSOLE_LOGGER.info(
             "Command {} - Params {} - Client ID: {}",
             JoinCommandHandler.COMMAND_NAME,
@@ -35,7 +39,7 @@ public class JoinCommandHandler implements ICommandHandler {
             new InvocableCommand(
                 "clientJoin",
                 BroadcastServerMessageInvocableCommandHandler.COMMAND_NAME,
-                null,
+                connectedPlayers,
                 new Object[]{response}
             )
         );
