@@ -39,7 +39,7 @@ public class PartCommandHandler implements ICommandHandler {
             new InvocableCommand(
                 "clientPart",
                 BroadcastServerMessageInvocableCommandHandler.COMMAND_NAME,
-                null,
+                connectedPlayers,
                 new Object[]{clientId}
             )
         );
