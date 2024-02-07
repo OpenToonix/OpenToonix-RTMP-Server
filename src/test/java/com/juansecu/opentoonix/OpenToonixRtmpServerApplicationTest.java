@@ -1,20 +1,14 @@
 package com.juansecu.opentoonix;
 
-import static org.junit.Assert.assertTrue;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class OpenToonixRtmpServerApplicationTest
-{
+public class OpenToonixRtmpServerApplicationTest {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+        Assert.assertTrue( true );
     }
 }
