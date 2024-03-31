@@ -5,8 +5,8 @@ for Toonix World _(mostly known as **Mundo Toonix**)_.
 
 ## Requirements
 
-- **Java -** Version 15
-- [Red5 Server](https://github.com/Red5/red5-server) instance
+- **Java -** Version 17
+- [Red5 Server](https://github.com/Red5/red5-server) instance - Version 1.3.25
 
 ## Building
 
