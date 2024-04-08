@@ -1,5 +1,6 @@
 package com.juansecu.opentoonix.commands.handlers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.red5.logging.Red5LoggerFactory;
 import org.red5.server.api.service.IServiceCapableConnection;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ public class CommandHandlerController implements ICommandHandler {
             return null;
         }
 
+        final ObjectMapper objectMapper = new ObjectMapper();
+
         CommandHandlerController.CONSOLE_LOGGER.info(
             "Command received: {}",
             GetRoomSharedObjectNameCommandHandler.COMMAND_NAME
@@ -31,7 +34,7 @@ public class CommandHandlerController implements ICommandHandler {
 
         switch ((String) params[0]) {
             case GetRoomSharedObjectNameCommandHandler.COMMAND_NAME:
-                return new GetRoomSharedObjectNameCommandHandler().handle(
+                return new GetRoomSharedObjectNameCommandHandler(objectMapper).handle(
                     params,
                     connectedPlayers
                 );

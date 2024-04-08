@@ -1,48 +1,86 @@
 package com.juansecu.opentoonix.commands.handlers;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.red5.logging.Red5LoggerFactory;
+import org.red5.server.api.Red5;
 import org.red5.server.api.service.IServiceCapableConnection;
 import org.slf4j.Logger;
 
-import com.juansecu.opentoonix.commands.models.responses.GetRoomSharedObjectNameCommandCallRoomResponse;
+import com.juansecu.opentoonix.commands.models.RoomObject;
 import com.juansecu.opentoonix.commands.models.responses.GetRoomSharedObjectNameCommandResponse;
 
+@RequiredArgsConstructor
 public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
     public static final String COMMAND_NAME = "getRoomSOName";
     public static final String ROOM_SHARED_OBJECT_NAME = "cosmos";
 
     private static final Logger CONSOLE_LOGGER = Red5LoggerFactory.getLogger(GetRoomSharedObjectNameCommandHandler.class);
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public Object handle(
         final Object[] params,
         final Map<IServiceCapableConnection, Object[]> connectedPlayers
     ) {
-        if (params.length == 0) {
-            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error("No command received");
+        if (!(params[1] instanceof Map)) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error("Invalid command received");
+            Red5.getConnectionLocal().close();
             return null;
         }
 
-        final HashMap <String, Object> callRoom = new HashMap<>(1);
-        final GetRoomSharedObjectNameCommandCallRoomResponse callRoomObject = new GetRoomSharedObjectNameCommandCallRoomResponse();
-        final HashMap <String, Object> response = new HashMap<>(2);
+        Map<String, Object> response = null;
+        RoomObject roomObject = null;
+        String roomName = null;
+        String sharedObjectName = Red5.getConnectionLocal().getScope().getName() + "_";
+
         final GetRoomSharedObjectNameCommandResponse responseObject = new GetRoomSharedObjectNameCommandResponse();
-        final HashMap <String, String> sharedObject = new HashMap<>(1);
 
-        callRoom.put("call", params[1]);
+        try {
+            roomObject = this.objectMapper.convertValue(params[1], new TypeReference<RoomObject>() {});
+        } catch (Exception exception) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error(
+                "Error parsing request: {}",
+                exception.getMessage()
+            );
 
-        sharedObject.put(
-            "soName",
-            GetRoomSharedObjectNameCommandHandler.ROOM_SHARED_OBJECT_NAME
-        );
+            Red5.getConnectionLocal().close();
 
-        response.putAll(callRoom);
-        response.putAll(sharedObject);
+            return null;
+        }
 
-        callRoomObject.setRoom((String) params[1]);
+        roomName = roomObject.getRoom();
+
+        if (roomName == null) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error("No room name provided");
+            Red5.getConnectionLocal().close();
+            return null;
+        }
+
+        sharedObjectName += roomName;
+
+        responseObject.setCall(roomObject);
+        responseObject.setSoName(sharedObjectName);
+
+        try {
+            response = this.objectMapper.convertValue(
+                responseObject,
+                new TypeReference<Map<String, Object>>() {}
+            );
+        } catch (Exception exception) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error(
+                "Error parsing response: {}",
+                exception.getMessage()
+            );
+
+            Red5.getConnectionLocal().close();
+
+            return null;
+        }
 
         return response;
     }
