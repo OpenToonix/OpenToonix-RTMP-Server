@@ -24,7 +24,7 @@ public class PrivateClientMessageInvocableCommandHandler implements IInvocableCo
         conn.invoke(
             PrivateClientMessageInvocableCommandHandler.COMMAND_NAME,
             new Object[]{
-                invocableCommand.getClientMethod(),
+                conn.getClient().getId(),
                 invocableCommand.getParams()[0]
             }
         );

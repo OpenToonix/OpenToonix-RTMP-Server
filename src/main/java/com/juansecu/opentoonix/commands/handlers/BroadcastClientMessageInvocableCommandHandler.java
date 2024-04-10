@@ -27,7 +27,7 @@ public class BroadcastClientMessageInvocableCommandHandler implements IInvocable
             connection.invoke(
                 BroadcastClientMessageInvocableCommandHandler.COMMAND_NAME,
                 new Object[]{
-                    invocableCommand.getClientMethod(),
+                    Red5.getConnectionLocal().getClient().getId(),
                     invocableCommand.getParams()[0]
                 }
             );
