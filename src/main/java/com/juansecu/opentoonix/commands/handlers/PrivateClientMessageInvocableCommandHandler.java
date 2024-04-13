@@ -16,7 +16,7 @@ public class PrivateClientMessageInvocableCommandHandler implements IInvocableCo
     public void handle(InvocableCommand invocableCommand) {
         PrivateClientMessageInvocableCommandHandler.CONSOLE_LOGGER.info(
             "privateClientMessage param: {}",
-            invocableCommand.getParams()[0]
+            invocableCommand.getParams()[1]
         );
 
         final IServiceCapableConnection conn = (IServiceCapableConnection) Red5.getConnectionLocal();
@@ -24,8 +24,8 @@ public class PrivateClientMessageInvocableCommandHandler implements IInvocableCo
         conn.invoke(
             PrivateClientMessageInvocableCommandHandler.COMMAND_NAME,
             new Object[]{
-                conn.getClient().getId(),
-                invocableCommand.getParams()[0]
+                invocableCommand.getParams()[0],
+                invocableCommand.getParams()[1]
             }
         );
     }
