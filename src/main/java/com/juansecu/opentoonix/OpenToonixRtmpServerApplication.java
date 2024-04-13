@@ -112,7 +112,7 @@ public class OpenToonixRtmpServerApplication extends MultiThreadedApplicationAda
         this.invocableCommandHandlerController.handle(
             new InvocableCommand(
                 (String) message[0],
-                PrivateServerMessageInvocableCommandHandler.COMMAND_NAME,
+                PrivateClientMessageInvocableCommandHandler.COMMAND_NAME,
                 OpenToonixRtmpServerApplication.CONNECTED_PLAYERS,
                 message
             )
