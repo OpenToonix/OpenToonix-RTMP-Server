@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 
 import com.juansecu.opentoonix.commands.models.RoomObject;
 import com.juansecu.opentoonix.commands.models.responses.GetRoomSharedObjectNameCommandResponse;
+import com.juansecu.opentoonix.rooms.utils.RoomValidationUtil;
 
 @RequiredArgsConstructor
 public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
@@ -55,9 +56,14 @@ public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
 
         roomName = roomObject.getRoom();
 
-        if (roomName == null) {
-            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error("No room name provided");
+        if (!RoomValidationUtil.isValidRoom(roomName)) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error(
+                "Invalid room provided: {}",
+                roomName
+            );
+
             Red5.getConnectionLocal().close();
+
             return null;
         }
 
