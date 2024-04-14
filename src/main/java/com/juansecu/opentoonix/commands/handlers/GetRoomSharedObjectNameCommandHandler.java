@@ -17,7 +17,6 @@ import com.juansecu.opentoonix.rooms.utils.RoomValidationUtil;
 @RequiredArgsConstructor
 public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
     public static final String COMMAND_NAME = "getRoomSOName";
-    public static final String ROOM_SHARED_OBJECT_NAME = "cosmos";
 
     private static final Logger CONSOLE_LOGGER = Red5LoggerFactory.getLogger(GetRoomSharedObjectNameCommandHandler.class);
 

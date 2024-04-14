@@ -177,7 +177,7 @@ public class OpenToonixRtmpServerApplication extends MultiThreadedApplicationAda
         if (
             !super.createSharedObject(
                 room,
-                GetRoomSharedObjectNameCommandHandler.ROOM_SHARED_OBJECT_NAME,
+                room.getName(),
                 false
             )
         ) {
