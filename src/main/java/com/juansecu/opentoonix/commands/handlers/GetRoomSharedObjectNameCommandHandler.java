@@ -12,11 +12,11 @@ import org.slf4j.Logger;
 
 import com.juansecu.opentoonix.commands.models.RoomObject;
 import com.juansecu.opentoonix.commands.models.responses.GetRoomSharedObjectNameCommandResponse;
+import com.juansecu.opentoonix.rooms.utils.RoomValidationUtil;
 
 @RequiredArgsConstructor
 public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
     public static final String COMMAND_NAME = "getRoomSOName";
-    public static final String ROOM_SHARED_OBJECT_NAME = "cosmos";
 
     private static final Logger CONSOLE_LOGGER = Red5LoggerFactory.getLogger(GetRoomSharedObjectNameCommandHandler.class);
 
@@ -55,9 +55,14 @@ public class GetRoomSharedObjectNameCommandHandler implements ICommandHandler {
 
         roomName = roomObject.getRoom();
 
-        if (roomName == null) {
-            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error("No room name provided");
+        if (!RoomValidationUtil.isValidRoom(roomName)) {
+            GetRoomSharedObjectNameCommandHandler.CONSOLE_LOGGER.error(
+                "Invalid room provided: {}",
+                roomName
+            );
+
             Red5.getConnectionLocal().close();
+
             return null;
         }
 
