@@ -19,14 +19,18 @@ public class PrivateClientMessageInvocableCommandHandler implements IInvocableCo
             invocableCommand.getParams()[1]
         );
 
-        final IServiceCapableConnection conn = (IServiceCapableConnection) Red5.getConnectionLocal();
-
-        conn.invoke(
-            PrivateClientMessageInvocableCommandHandler.COMMAND_NAME,
-            new Object[]{
-                invocableCommand.getParams()[0],
-                invocableCommand.getParams()[1]
+        for(IServiceCapableConnection connection : invocableCommand.getConnectedPlayers().keySet()) {
+            if(!connection.getClient().getId().equals(invocableCommand.getParams()[0])){
+                continue;
             }
-        );
+
+            connection.invoke(
+                PrivateClientMessageInvocableCommandHandler.COMMAND_NAME,
+                new Object[]{
+                    Red5.getConnectionLocal().getClient().getId(),
+                    invocableCommand.getParams()[1]
+                }
+            );
+        }
     }
 }
